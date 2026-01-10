@@ -1,5 +1,5 @@
 
-import 'package:aro_monitoring/domain/core/error/failure.dart';
+import 'package:ml_app/domain/core/error/failure.dart';
 
 /// 
 /// Result contains or data of type T or error

@@ -1,0 +1,4 @@
+enum ConfigViewMode {
+  autoML,
+  allModels,
+}

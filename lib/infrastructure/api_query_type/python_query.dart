@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:aro_monitoring/infrastructure/api_query_type/api_query_type.dart';
+import 'package:ml_app/infrastructure/api_query_type/api_query_type.dart';
 import 'package:uuid/uuid.dart';
 
 class PythonQuery implements ApiQueryType {

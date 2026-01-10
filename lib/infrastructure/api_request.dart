@@ -1,11 +1,11 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:aro_monitoring/domain/core/error/failure.dart';
-import 'package:aro_monitoring/domain/core/result/result.dart';
-import 'package:aro_monitoring/infrastructure/api_address.dart';
-import 'package:aro_monitoring/infrastructure/api_query_type/api_query_type.dart';
-import 'package:aro_monitoring/infrastructure/api_reply.dart';
+import 'package:ml_app/domain/core/error/failure.dart';
+import 'package:ml_app/domain/core/result/result.dart';
+import 'package:ml_app/infrastructure/api_address.dart';
+import 'package:ml_app/infrastructure/api_query_type/api_query_type.dart';
+import 'package:ml_app/infrastructure/api_reply.dart';
 import 'package:logging/logging.dart';
 
 class ApiRequest {
