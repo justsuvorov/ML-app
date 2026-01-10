@@ -118,6 +118,10 @@ class _ConfigDataBodyState extends State<ConfigDataBody> {
   Widget _buildCombinedViewWithToggle() {
   return Column(
       children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          child: _buildUpdateButton(),
+        ),
         ConfigViewToggle(
           currentMode: _currentMode,
           onModeChanged: (mode) {
@@ -182,6 +186,54 @@ void _openModelEditor() async {
       _allModelsConfig = updatedConfig; // <- Обновляем _config
     });
   }
+}
+
+void onUpdatePressed() {
+  try {
+    final result = widget.configData.updateModels(
+      autoMLConfig: _config!,
+      allModelsConfig: _allModelsConfig!,
+      retro: true,
+      hpTune: false,
+      useTempFiles: false,
+    );
+    
+    print('Update successful: $result');
+    // Обработка успешного ответа
+  } catch (e) {
+    print('Error: $e');
+    // Обработка ошибки
+  }
+}
+
+Widget _buildUpdateButton() {
+  return SizedBox(
+    width: double.infinity,
+    child: ElevatedButton.icon(
+      onPressed: onUpdatePressed,
+      icon: _isLoading 
+          ? const SizedBox(
+              width: 16,
+              height: 16,
+              child: CircularProgressIndicator(
+                strokeWidth: 2,
+                valueColor: AlwaysStoppedAnimation(Colors.white),
+              ),
+            )
+          : const Icon(Icons.update, size: 20),
+      label: _isLoading 
+          ? const Text('Обновление...')
+          : const Text('Обновить модели'),
+      style: ElevatedButton.styleFrom(
+        backgroundColor: Colors.green,
+        foregroundColor: Colors.white,
+        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8),
+        ),
+      ),
+    ),
+  );
 }
 
 

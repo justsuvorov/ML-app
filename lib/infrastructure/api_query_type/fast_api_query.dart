@@ -80,5 +80,70 @@ Future<AllModelsConfig> getAllModelsDefaultConfig() async {
       throw Exception('Network error: $e');
     }
   }
+Future<Map<String, dynamic>> updateRequest({
+  required AutoMLConfig autoMLConfig,
+  required AllModelsConfig allModelsConfig,
+  bool retro = true,
+  bool hpTune = false,
+  bool useTempFiles = false,
+}) async {
+  try {
+    final Map<String, dynamic> requestData = {
+      'auto_ml_config': _removeNulls(autoMLConfig.toJson()),
+      'all_model_config': _removeNulls(allModelsConfig.toJson()),
+      'user_parameters': {
+        'retro': retro,
+        'hp_tune': hpTune,
+        'use_temp_files': useTempFiles,
+      },
+    };
 
+    print('Sending cleaned request: ${jsonEncode(requestData)}');
+
+    final response = await http.post(
+      Uri.parse('$_baseUrl/api/update'),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode(requestData),
+    );
+
+    print('Response status: ${response.statusCode}');
+    print('Response body: ${response.body}');
+
+    if (response.statusCode == 200) {
+      return jsonDecode(response.body);
+    } else {
+      throw Exception('Failed to update models: ${response.statusCode} - ${response.body}');
+    }
+  } catch (e) {
+    print('Network error in updateRequest: $e');
+    rethrow;
+  }
+}
+
+// Вспомогательная функция для удаления null значений
+Map<String, dynamic> _removeNulls(Map<String, dynamic> json) {
+  final Map<String, dynamic> cleaned = {};
+  
+  for (final entry in json.entries) {
+    if (entry.value != null) {
+      if (entry.value is Map<String, dynamic>) {
+        cleaned[entry.key] = _removeNulls(entry.value as Map<String, dynamic>);
+      } else if (entry.value is List) {
+        // Обработка списков
+        final list = (entry.value as List).map((item) {
+          if (item is Map<String, dynamic>) {
+            return _removeNulls(item);
+          }
+          return item;
+        }).toList();
+        cleaned[entry.key] = list;
+      } else {
+        cleaned[entry.key] = entry.value;
+      }
+    }
+    // Игнорируем null значения
+  }
+  
+  return cleaned;
+}
 }

@@ -131,4 +131,59 @@ class ConfigData {
     );
   }
 }
+
+Future<Result<Map<String, dynamic>>> updateModels({
+  required AutoMLConfig autoMLConfig,
+  required AllModelsConfig allModelsConfig,
+  bool retro = false,
+  bool hpTune = false,
+  bool useTempFiles = false,
+}) async {
+  try {
+    _log.fine('Sending update request to API...');
+    
+    if (!_fastAPIQuery.valid()) {
+      return Result<Map<String, dynamic>>(
+        error: Failure(
+          message: 'API query validation failed',
+          stackTrace: StackTrace.current,
+        ),
+      );
+    }
+
+    final responseData = await _fastAPIQuery.updateRequest(
+      autoMLConfig: autoMLConfig,
+      allModelsConfig: allModelsConfig,
+      retro: retro,
+      hpTune: hpTune, 
+      useTempFiles: useTempFiles,
+    );
+    
+    _log.fine('Update request completed successfully');
+    
+    // Проверяем ответ от бэкенда
+    if (responseData.containsKey('error')) {
+      _log.warning('Backend returned error: ${responseData['error']}');
+      return Result<Map<String, dynamic>>(
+        error: Failure(
+          message: responseData['error'] is String 
+            ? responseData['error'] 
+            : 'Backend error occurred',
+          stackTrace: StackTrace.current,
+        ),
+      );
+    }
+    
+    return Result<Map<String, dynamic>>(data: responseData);
+    
+  } catch (e, stackTrace) {
+    _log.severe('Error updating models: $e', e, stackTrace);
+    return Result<Map<String, dynamic>>(
+      error: Failure(
+        message: e is Exception ? e.toString() : 'Unknown error occurred',
+        stackTrace: stackTrace,
+      ),
+    );
+  }
+}
 }
