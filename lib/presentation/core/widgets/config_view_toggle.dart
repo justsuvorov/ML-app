@@ -54,33 +54,14 @@ class ConfigViewToggle extends StatelessWidget {
                 
                 // Кнопка All Models
                 _buildToggleButton(
-                  'Models Config',
+                  'Models',
                   ConfigViewMode.allModels,
                   Icons.list_alt,
                   Colors.green,
                 ),
               ],
             ),
-          ),
-          
-          // Индикатор количества моделей
-          if (modelsCount != null && currentMode == ConfigViewMode.allModels)
-            Container(
-              margin: const EdgeInsets.only(left: 12),
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-              decoration: BoxDecoration(
-                color: Colors.green[50],
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Text(
-                '$modelsCount моделей',
-                style: TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.green[800],
-                ),
-              ),
-            ),
+          ), 
         ],
       ),
     );

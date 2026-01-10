@@ -31,7 +31,7 @@ class _HomePageState extends State<HomeBody> {
      Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => ConfigPage(
-                        title: "AutoMLConfig",
+                        title: "Конфигурация",
                         configData: ConfigData(fastAPIQuery: FastApiQuery(baseUrl: 'http://127.0.0.1:8000',),
                         ),
                       )),

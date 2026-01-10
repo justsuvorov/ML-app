@@ -40,13 +40,6 @@ class ConfigPage extends StatelessWidget {
                 );
               },
             ),
-            ListTile(
-              leading: const Icon(Icons.storage),
-              title: const Text("data"),
-              onTap: () {
-                // TODO onTap to be implemented...
-              },
-            ),
           ],
         ),
       ),
