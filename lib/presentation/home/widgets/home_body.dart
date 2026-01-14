@@ -4,6 +4,7 @@ import 'package:ml_app/infrastructure/config_data.dart';
 import 'package:ml_app/presentation/data/data_page.dart';
 import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class HomeBody extends StatefulWidget {
   ///
@@ -42,10 +43,13 @@ class _HomePageState extends State<HomeBody> {
     
     // TODO method to be implemented...
   }
-  void _exploringResultsButtonClick() {
-    
-    // TODO method to be implemented...
+void _exploringResultsButtonClick() async {
+  const url = 'http://localhost:5000';
+  final Uri _url = Uri.parse(url);
+  if (!await launchUrl(_url)) {
+    throw Exception('Could not launch $_url');
   }
+}
   void _exportResultsButtonClick() {
     
     // TODO method to be implemented...
