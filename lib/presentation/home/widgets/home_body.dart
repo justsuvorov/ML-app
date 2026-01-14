@@ -39,9 +39,14 @@ class _HomePageState extends State<HomeBody> {
                     );
   }
 
-   void _monitoringButtonClick() {
+   void _monitoringButtonClick() async {
     
-    // TODO method to be implemented...
+    const url = 'http://localhost:3000';
+    final Uri _url = Uri.parse(url);
+    if (!await launchUrl(_url)) {
+      throw Exception('Could not launch $_url');
+  }
+
   }
 void _exploringResultsButtonClick() async {
   const url = 'http://localhost:5000';
